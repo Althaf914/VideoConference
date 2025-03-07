@@ -1,4 +1,6 @@
 import express from "express";
+import dotenv from "dotenv"
+dotenv.config();
 import { createServer } from "node:http";
 
 import { Server } from "socket.io";
@@ -14,7 +16,7 @@ const server = createServer(app);
 const io = connectToSocket(server);
 
 
-app.set("port", (process.env.PORT || 8000))
+app.set("port", (process.env.PORT || 9000))
 app.use(cors());
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
@@ -23,7 +25,7 @@ app.use("/api/v1/users", userRoutes);
 
 const start = async () => {
     app.set("mongo_user")
-    const connectionDb = await mongoose.connect("mongodb+srv://mohdalthaf914:althaf123@videoconferencecluster.5xypw.mongodb.net/?retryWrites=true&w=majority&appName=VideoConferenceCluster")
+    const connectionDb = await mongoose.connect(process.env.MONGO_URL)
 
     console.log(`MONGO Connected DB HOst: ${connectionDb.connection.host}`)
     server.listen(app.get("port"), () => {
