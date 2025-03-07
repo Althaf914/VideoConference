@@ -1,19 +1,20 @@
 import { Server } from "socket.io"
 
+
 let connections = {}
 let messages = {}
 let timeOnline = {}
 
-
-export const connectToSocket= (server) => {
-    const io= new Server(server, {
+export const connectToSocket = (server) => {
+    const io = new Server(server, {
         cors: {
             origin: "*",
             methods: ["GET", "POST"],
-            allowedHeaders: "*",
+            allowedHeaders: ["*"],
             credentials: true
         }
     });
+
 
     io.on("connection", (socket) => {
 
@@ -104,12 +105,15 @@ export const connectToSocket= (server) => {
                         }
                     }
                 }
+
             }
+
+
         })
 
 
+    })
 
-    });
 
     return io;
 }
